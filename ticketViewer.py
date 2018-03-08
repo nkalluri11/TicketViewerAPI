@@ -1,18 +1,25 @@
-# Import files
+# Imports
 from tabulate import tabulate
-from ticket import *
+from ticket import*
 
-# Set the request parameters
+# Set the HTTP request parameters
 url = "https://arjunkalluri.zendesk.com/api/v2/tickets.json"
 user = "nag11690@gmail.com"
 pwd = "Anshika@489"
 
+# Tickets per page
+TicketsPerPage = 25
+
 # List if all the tickets 
 ticketList = []
+
 
 # Method for connecting to API and getting the ticket information
 def connect(url, user, pwd):
 
+    pagesRemaining = False
+
+    while pagesRemaining == False:
     	responseList = getJsonData(url,user,pwd)
 
 	# Error check
@@ -25,6 +32,9 @@ def connect(url, user, pwd):
        	        ticketsData = getTicketData(response)
        	        ticketList = getTicketList(ticketsData, ticketList)
 
+       	    print "\nSuccessfully connected to Zendesk API and downloaded tickets data.\n"
+            pagesRemaining = True
+
 
 # Method for displaying menu items
 def displayMenuItems():
@@ -35,37 +45,69 @@ def displayMenuItems():
     print "* Press 4 to quit"
 
 
+# Method fpr displaying all the tickets
 def displayAllTickets(ticketList):
 
-    start = 0
-    end = len(ticketList)
+    print "\n----------------------------------------------------------------------------------------- \n"
 
-    tabulated_list = []
+    start = 0
+    end = start + TicketsPerPage
+
+    if end > len(ticketList):
+        end = len(ticketList)
+
+    tabulatedList = []
 
     for ticket in ticketList[start:end]:
-    	tabulated_list.append([ticket.id,ticket.subject,ticket.submitter_id, ticket.created_at])
+    	tabulatedList.append([ticket.id,ticket.subject,ticket.submitter_id, ticket.created_at])
 
-    print tabulate(tabulated_list, headers=["ID","Subject","Submitter ID", "Submitted at"],tablefmt="simple") + "\n"
+    print tabulate(tabulatedList, headers=["Ticket ID","Subject","Submitter ID", "Submitted at"],numalign = "center", stralign = "center", tablefmt="grid")
+
+    print "\n----------------------------------------------------------------------------------------- \n"
 
 
+# Method for displaying a specific ticket information
 def displayIndividualTicket(ticketList):
 
-    inputTicketNumber = raw_input("Enter the ticket ID: ")
+    inputTicketNumber = raw_input("\nEnter the desired ticket ID: ")
 
+    tabulatedList = []
+
+    # Checking for a ticket in the list
     for eachTicket in ticketList:
         if str(eachTicket.id) == inputTicketNumber:
+		
+	    # Displaying information
+	    print "\n----------------------------------------------------------------------------------------- \n"
 
-	    print "\nTicket ID: " + str(eachTicket.id)
-	    print "Subject: " + str(eachTicket.subject)
-	    print "Priority: " + str(eachTicket.priority)
-	    print "Status: " + str(eachTicket.status)
+	    tabulatedList.append(["Ticket ID", str(eachTicket.id)])
+	    tabulatedList.append(["Subject", str(eachTicket.subject)])
+	    tabulatedList.append(["Submitter ID", str(eachTicket.submitter_id)])
+	    tabulatedList.append(["Assignee ID", str(eachTicket.assignee_id)])
+	    tabulatedList.append(["Priority", str(eachTicket.priority)])
+	    tabulatedList.append(["Status", str(eachTicket.status)])
+	    tabulatedList.append(["Created at", str(eachTicket.created_at)])
+	    tabulatedList.append(["Description", str(eachTicket.description)])
+
+	    print tabulate(tabulatedList, tablefmt="grid")
+
+	    print "\n----------------------------------------------------------------------------------------- \n"
+
             return
 
-    print "No such ticket."
+    print "\nRequested ticket could not be found \n"
+	
+	    
+
+	    
 
 
 # Main method
 def main():
+    print "\n----------------------------------------------------------------------------------------- \n"
+    print "------------------------------ Welcome to Ticket Viewer ---------------------------------"
+    print "\n----------------------------------------------------------------------------------------- \n"
+    
     # Flag for exiting
     exitFlag = False    
 
@@ -73,7 +115,8 @@ def main():
 
 	# Method to display menu items
         displayMenuItems()
-    	inputValue = raw_input("Enter your selection : ")
+
+    	inputValue = raw_input("\nEnter your selection : ")
 
     	if inputValue == "1":
     	    connect(url, user, pwd)
@@ -84,7 +127,11 @@ def main():
         elif inputValue == "4":
             exitFlag = True 
     	else:
-            print "Kindly enter a valid input."
+            print "\nKindly enter a valid input\n"
+
+    print "\n----------------------------------------------------------------------------------------- \n"
+    print "---------------------------- Thank you! Have a great day! -------------------------------"
+    print "\n----------------------------------------------------------------------------------------- \n"
 
 # Entry method        
 if __name__== "__main__":
