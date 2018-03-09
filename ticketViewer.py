@@ -1,6 +1,7 @@
 # Imports
 from tabulate import tabulate
 from ticket import*
+import datetime
 
 # Set the HTTP request parameters
 url = "https://arjunkalluri.zendesk.com/api/v2/tickets.json"
@@ -50,7 +51,7 @@ def displayAllTickets(ticketList):
     tabulatedList = []
 
     for ticket in ticketList:
-        tabulatedList.append([ticket.id, ticket.subject, ticket.submitter_id,  ticket.created_at])
+        tabulatedList.append([ticket.id, ticket.subject, ticket.submitter_id, datetime.datetime.strptime(ticket.created_at,'%Y-%m-%dT%H:%M:%SZ')])
 
     print tabulate(tabulatedList, headers=["Ticket ID", "Subject", "Submitter ID",  "Submitted at"], numalign="center", stralign="center", tablefmt="grid")
 
@@ -77,7 +78,7 @@ def displayIndividualTicket(ticketList):
             tabulatedList.append(["Assignee ID", str(eachTicket.assignee_id)])
             tabulatedList.append(["Priority", str(eachTicket.priority)])
             tabulatedList.append(["Status", str(eachTicket.status)])
-            tabulatedList.append(["Created at", str(eachTicket.created_at)])
+            tabulatedList.append(["Created at", str(datetime.datetime.strptime(eachTicket.created_at,'%Y-%m-%dT%H:%M:%SZ'))])
             tabulatedList.append(["Description", str(eachTicket.description)])
 
             print tabulate(tabulatedList, tablefmt="grid")
