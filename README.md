@@ -1,6 +1,6 @@
 # TicketViewerAPI
 
-An API for displaying the tickets by connecting to Zendesk API
+An API for displaying the ticket details from the Zendesk API
 
 ## Development environment and Dependencies
 
@@ -10,9 +10,9 @@ An API for displaying the tickets by connecting to Zendesk API
 
 ## Installations
 
-- A. Python 
+###### Python 
 
-Python is readily available on Ubuntu releases, If not it can be downloaded and installed on Linux through command line,
+Python is readily available on Ubuntu releases. If not, you can be download and install it on Linux through the command line by following the steps listed below.
 
 1. Install Required Packages
 
@@ -23,7 +23,7 @@ sudo apt-get install libreadline-gplv2-dev libncursesw5-dev libssl-dev libsqlite
 ```
 2. Download the required python version 
 ```
-version=2.7.13
+version=2.7.12
 cd ~/Downloads/
 wget https://www.python.org/ftp/python/$version/Python-$version.tgz
 ```
@@ -40,9 +40,9 @@ sudo checkinstall
 ```
 The same can be found in the link for installing [python](https://askubuntu.com/questions/101591/how-do-i-install-the-latest-python-2-7-x-or-3-x-on-ubuntu)
 
-You can also follow the steps listed for [Mac](http://docs.python-guide.org/en/latest/starting/install/osx/) and [Windows](http://docs.python-guide.org/en/latest/starting/install/win/) users.
+If you are a Mac or Windoows user, you can follow the steps listed for [Mac](http://docs.python-guide.org/en/latest/starting/install/osx/) and [Windows](http://docs.python-guide.org/en/latest/starting/install/win/).
 
-You might as well install pip, if you don't have it installed already
+You might as well install pip, if you don't have it installed already.
 
 You can the following command on Mac to install pip,
 
@@ -52,11 +52,11 @@ And for Ubuntu,
 
 `sudo apt-get install python-pip`
 
-- B. Libraries
+###### Libraries
 
 Requests Library is used for handling the HTTP requests and Tabulate library is used for displaying the ticket details in an orderly manner
 
-You can simply do it by uing the foillowing command
+You can simply do it by uing the following command
 
 1. `pip install requests`
 
