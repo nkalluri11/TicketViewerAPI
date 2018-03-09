@@ -60,7 +60,7 @@ def displayAllTickets(ticketList):
 # Method for displaying a specific ticket information
 def displayIndividualTicket(ticketList):
 
-    inputTicketNumber = raw_input("\nEnter the desired ticket ID: ")
+    inputTicketNumber = raw_input("\nPlease enter the desired ticket ID: ")
 
     tabulatedList = []
 
@@ -103,7 +103,7 @@ def main():
         # Method to display menu items
         displayMenuItems()
 
-        inputValue = raw_input("\nEnter your selection : ")
+        inputValue = raw_input("\nPlease enter your selection : ")
 
         if inputValue is "1":
             connect(url, user, pwd)
